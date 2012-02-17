@@ -15,10 +15,10 @@ function sleepTime() {
 //our main twitter function
 function tweettweet($thisMsg) {
 	//set our keys
-	$consumerKey = 'w9Udk8K5apLSgIa4nleVXA';
-	$consumerSecret = 'X7BEo4DyBErE1MJ7AbZiHDtVQ6LZuau9jtIX6K6mnk';
-	$oAuthToken = '34503580-i3jOGQnVp3F406hFpqOFV5oZEAMVDj5RFVJkALCCs';
-	$oAuthSecret = 'Xsf9bmayGlJoCFHrK3wmhHbhNmVKbSMA1mBkryaRm4';
+	$consumerKey = '';
+	$consumerSecret = '';
+	$oAuthToken = '';
+	$oAuthSecret = '';
 	//declare our tweet mech
 	$tweet = new TwitterOAuth($consumerKey, $consumerSecret, $oAuthToken, $oAuthSecret);
 	//echo nice sending msg
