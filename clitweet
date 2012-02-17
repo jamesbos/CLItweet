@@ -1,16 +1,11 @@
 #!/usr/bin/php
 <?php
 
-//load out OAuth stuff
+//load our OAuth stuff
 require_once('twitteroauth/twitteroauth.php');
 
 //clear the terminal
 echo exec('clear');
-
-//some pretty timer for echoing banner
-function sleepTime() {
-	time_nanosleep(0, 100000000);
-}
 
 //our main twitter function
 function tweettweet($thisMsg) {
@@ -29,73 +24,40 @@ function tweettweet($thisMsg) {
 	echo "Sent!\n";
 }
 
-//start STDIN function
-function tweetFunction(){
-	echo "Enter your tweet:";
-	$msg = fgets(STDIN);
-	$checkLen = strlen($msg);
-			
-		if($checkLen > 2) { 
-				echo "Your tweet is too long, try again?:";
-					$checkMsg = fgets(STDIN);
-						if($checkMsg = 'y') 
-							{ 
-								tweetFunction(); 
-							} 
-							else 
-								{	
-									exit();
-								}
-			} 
-			
-			else 
-				{
-				// Tweet our message
-				echo $msg;
-				//tweettweet($msg);
-				}
-		return $msg;
-		return $checkMsg;
+//Function to check the length of tweet.
+function checkLen($thisMsg){
+	$checkLen = strlen($thisMsg);
+	
+	if($checkLen > 141) { 
+		echo "Your tweet exceeds the 140 char limit.\n";
+		exit();
+		}
 }
 
 function helpMsg() {
-echo "+++++++++CLItweet PHP+++++++++\n";
-echo "+Command Line Interface tweet+\n";
-echo "+Coded by james@jamesbos.com +\n";
-echo "+   Licensed under GPL v2    +\n";
-echo "++++++++++++++++++++++++++++++\n";
-echo "usage:\n\n"; 
-echo "clitweet -s [your text] (send directly from CLI)\n";
-echo "         -h (help message you're looking at!)\n";
-echo "         -U (send your PC uptime)\n";
-echo "         -D (send your dist info eg. uname -a)\n";
-echo "Remeber to use escape characters when using qoutes\n"; 
-echo "and other special chars eg. \' \& etc";
-echo "You can also also enclose your entire tweet around\n";
-echo "double qoutes\n"; 
+	echo "+++++++++++CLItweet PHP+++++++++\n";
+	echo "+Command Line Interface tweet+++\n";
+	echo "+Authered by james@jamesbos.com+\n";
+	echo "+Licensed under GPLv2+         +\n";
+	echo "++++++++++++++++++++++++++++++++\n";
+	echo "usage:\n\n"; 
+	echo "clitweet -s [your text] (send directly from CLI)\n";
+	echo "         -h (help message you're looking at!)\n";
+	echo "         -U (send your PC uptime)\n";
+	echo "         -D (send your dist info eg. uname -a)\n\n";
+	echo "Hot Tip:\n";
+	echo "Remeber to use escape characters when using qoutes\n"; 
+	echo "and other special chars eg. \' \& etc.\n\n";
+	echo "You can also also enclose your entire tweet around\n";
+	echo "double qoutes.\n\n"; 
 }
 
-function banner() {
-	//echo out our welcome message
-	echo "*************************\n";
-	sleepTime();
-	echo "**TWITTER UPDATE CLIENT**\n";
-	sleepTime();
-	echo "**e. james@jamesbos.com**\n";
-	sleepTime();
-	echo "**w. www.jamesbos.com****\n";
-	sleepTime();
-	echo "*************************\n";
-	echo "\n";
-}
+$tweetText = $_SERVER['argv'];
 
-
-$array = $_SERVER['argv'];
-
-function makestring($array)
+function getString($tweetText)
         {
         $outval = "";
-        foreach ($array as $k=>$v)
+        foreach ($tweetText as $k=>$v)
                 {
                 if (2 > $k) continue; 
                 if(is_array($v)) 
@@ -110,18 +72,25 @@ function makestring($array)
 return $outval;
 }
 
-$cliMsg = makestring($array);
+//define var as our function to get CLI input
+$cliMsg = getString($tweetText);
+
+//confirm that length does not exceed 140char limit
+$cliMsg = checkLen($cliMsg);
+
+/*
+Define our bash functions we want to parse to twitter (this will get bigger)
+*/
 $tweetUptime = exec('uptime');
-	
-	//declare our command line arguements
-	$option = $_SERVER['argv'][1];
+
+/*Turn off errors at last minute if someone enters no arguement when entering command, hense
+why it is left to the last minute. Lazy, I know... must be a better solution.*/
+error_reporting(0);
+//declare our command line arguments
+$option = $_SERVER['argv'][1];
+	if (empty($option)) {echo "Please use -h to get a list of options"; }
 	if ($option == '-h') { helpMsg(); exit(); } 
 	if ($option == '-s') { tweettweet($cliMsg); exit(); }
 	if ($option == '-U') { tweettweet($tweetUptime); exit(); }
-	//start with our banner
-	banner();
-	//start reading our tweet	
-	tweetFunction();
-	
 ?>
 

@@ -1,1 +1,38 @@
-CLItweet - pronounced C.L.I tweet or K-LIE-TWEET
+CLItweet v0.1.1 - pronounced C.L.I tweet or K-LIE-TWEET
+--------
+Allows raw tweeting from the command line with a few other options.
+Written totally in PHP with a few bash commands thrown in for good measure.
+
+INSTALLATION
+------------
+1) Twitter uses OAuth - You need to register an application
+at http://dev.twitter.com
+2) Change the Access Level in OAuth settings and Your Access Token to Read, Write.
+3) Copy the Consumer Key, Consumer Secret Access Token and Access Token Secret
+and paste them into the relevant fields in the tweet file.
+
+REQUIRMENTS
+-----------
+PHP5, PHP-CLI and PHP-CURL should be all you need to be running.
+No Apache or anything else required.
+
+USAGE
+-----
+clitweet	-s "your message here" [""'s to encapsulate single qoutes and other special char's]
+		-U [tweets your uptime]
+		-h [displays help]
+
+NOTES
+-----
+Since your messages are executed in the shell, you can append super globals such as
+$HOSTNAME etc. You can even set a cron job to tweet certain things also, for example
+use cron to tweet your uptime or when a new mail arrives. Endless possibilities!
+
+WISHLIST
+--------
+*Option to automate uploading text into pastebin and posting link
+*As above but for images
+*And as above but for screen shots.
+
+The above is easy but time is pending!
+		
