@@ -32,6 +32,7 @@ function checkLen($thisMsg){
 		echo "Your tweet exceeds the 140 char limit.\n";
 		exit();
 		}
+	return $thisMsg;
 }
 
 function helpMsg() {
@@ -90,7 +91,10 @@ error_reporting(0);
 $option = $_SERVER['argv'][1];
 	if (empty($option)) {echo "Please use -h to get a list of options"; }
 	if ($option == '-h') { helpMsg(); exit(); } 
-	if ($option == '-s') { tweettweet($cliMsg); exit(); }
+	if ($option == '-s') { 
+		tweettweet($cliMsg);		
+		exit(); 
+		}
 	if ($option == '-U') { tweettweet($tweetUptime); exit(); }
 ?>
 
